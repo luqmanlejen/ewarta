@@ -1,0 +1,21 @@
+.errorMessage{clear:both;color: #A94442 !important;}
+
+.pagination .first, .pagination .last{display:none;}
+
+.table > tbody > tr > td{vertical-align: middle;}
+
+.table > thead > tr > th:last-child {border-right-color: #DDD;}
+
+.sort-link{background:url(../images/sort_both.png) no-repeat center right; display:block;}
+.sort-link.asc{background:url(../images/sort_asc.png) no-repeat center right;}
+.sort-link.desc{background:url(../images/sort_desc.png) no-repeat center right;}
+
+.ui-dialog .ui-dialog-titlebar-close{display:none;}
+
+.grid-view .empty {font-style: normal;text-align: center;padding:10px;}
+.grid-view {padding: 0;}
+.grid-view .summary {margin: 0;}
+
+.width-15 {width: 15% !important;}
+.width-10 {width: 10% !important;}
+.width-5 {width: 5% !important;}
