@@ -144,8 +144,22 @@ class OstPuController extends CmsController {
                 $model->date_received = '0000-00-00';
             }
             $model->officer_maker_id = Yii::app()->session['user_id'];
-
-
+            
+            //pdf & word
+            $arr_bi = explode("/pu%20A/PDF/", $_POST['OstPu']['doc_name_pdf']);
+            $arr_bm = explode("/pu%20A/words/", $_POST['OstPu']['doc_name_word']);
+            if(sizeof($arr_bi) > 1){
+                if(isset($_POST['OstPu']['doc_name_pdf'])){
+                    echo $model->doc_name_pdf = $arr_bi[1];
+                }
+            }
+            if(sizeof($arr_bm) > 1){
+                if(isset($_POST['OstPu']['doc_name_word']) && $_POST['OstPu']['doc_name_word'] != ''){
+                    $model->doc_name_word = $arr_bm[1];
+                }
+            }
+            //pdf & word
+            
             $replace_count = 0;
             if (isset($_POST['replace_pu_add']) && sizeof($_POST['replace_pu_add']) > 0) {
                 OstPuReplace::model()->deleteAllByAttributes(array('replacee_id' => $model->id));
@@ -164,7 +178,7 @@ class OstPuController extends CmsController {
             if ($model->save()) {
                 if (isset($_POST['pdf_add'])) {
                     if (sizeof($_POST['pdf_add']) > 0) {
-                        //echo $_POST['doc_count'];
+                        OstPuDocument::model()->deleteAllByAttributes(array('pu_id' => $model->id, 'doc_type' => 1));
                         foreach ($_POST['pdf_add'] as $x) {
                             if ($x != '') {
                                 $model2 = new OstPuDocument;
@@ -178,7 +192,7 @@ class OstPuController extends CmsController {
                 }
                 if (isset($_POST['word_add'])) {
                     if (sizeof($_POST['word_add']) > 0) {
-                        //echo $_POST['doc_count'];
+                        OstPuDocument::model()->deleteAllByAttributes(array('pu_id' => $model->id, 'doc_type' => 2));
                         foreach ($_POST['word_add'] as $x) {
                             if ($x != '') {
                                 $model2 = new OstPuDocument;

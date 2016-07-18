@@ -44,21 +44,8 @@ class OstArticlesController extends CmsController {
 
                 OstArticlesStatus::model()->insertlog($model->id, $model->approval_sts);
 
-                if ($menu_id == '') {
-                    OstAuditTrail::model()->insertlog(9, 'create', $model->id);
-                    $this->redirect("index.php?r=ostArticles/admin");
-                } else {
-                    if ($menu_id == '192')
-                        OstAuditTrail::model()->insertlog(10, 'create', $model->id);
-
-                    if ($menu_id == '190')
-                        OstAuditTrail::model()->insertlog(11, 'create', $model->id);
-
-                    if ($menu_id == '194')
-                        OstAuditTrail::model()->insertlog(12, 'create', $model->id);
-
-                    $this->redirect("index.php?r=ostArticles/admin&menu_id=" . $menu_id);
-                }
+                OstAuditTrail::model()->insertlog(29, 'create', $model->id);
+                $this->redirect("index.php?r=ostArticles/admin");
             }
         }
 
@@ -93,21 +80,8 @@ class OstArticlesController extends CmsController {
 
                 OstArticles::model()->updateByPk($model2->id, array('title' => $_POST['title_my'], 'content' => $_POST['content_my']));
 
-                if ($menu_id == '') {
-                    OstAuditTrail::model()->insertlog(9, 'update', $model->id);
-                    $this->redirect("index.php?r=ostArticles/admin");
-                } else {
-                    if ($menu_id == '192')
-                        OstAuditTrail::model()->insertlog(10, 'update', $model->id);
-
-                    if ($menu_id == '190')
-                        OstAuditTrail::model()->insertlog(11, 'update', $model->id);
-
-                    if ($menu_id == '194')
-                        OstAuditTrail::model()->insertlog(12, 'update', $model->id);
-
-                    $this->redirect("index.php?r=ostArticles/admin&menu_id=" . $menu_id);
-                }
+                OstAuditTrail::model()->insertlog(29, 'update', $model->id);
+                $this->redirect("index.php?r=ostArticles/admin");
             }
         }
 
@@ -120,24 +94,9 @@ class OstArticlesController extends CmsController {
 
         OstArticles::model()->deleteAllByAttributes(array('parent_id' => $id));
 
-        if ($menu_id == '') {
+        OstAuditTrail::model()->insertlog(29, 'delete', $id);
 
-            OstAuditTrail::model()->insertlog(9, 'delete', $id);
-
-            $this->redirect("index.php?r=ostArticles/admin");
-        } else {
-
-            if ($menu_id == '192')
-                OstAuditTrail::model()->insertlog(10, 'delete', $id);
-
-            if ($menu_id == '190')
-                OstAuditTrail::model()->insertlog(11, 'delete', $id);
-
-            if ($menu_id == '194')
-                OstAuditTrail::model()->insertlog(12, 'delete', $id);
-
-            $this->redirect("index.php?r=ostArticles/admin&menu_id=" . $menu_id);
-        }
+        $this->redirect("index.php?r=ostArticles/admin");
     }
 
     public function actionSendforapproval($id, $menu_id = '') {
@@ -157,6 +116,8 @@ class OstArticlesController extends CmsController {
         OstArticles::model()->updateByPk($id, array('approval_sts' => 'archive'));
 
         OstArticlesStatus::model()->insertlog($id, 'archive');
+        
+        OstAuditTrail::model()->insertlog(29, 'Archive', $id);
 
         if ($menu_id == '')
             $this->redirect("index.php?r=ostArticles/admin");
@@ -169,7 +130,9 @@ class OstArticlesController extends CmsController {
         OstArticles::model()->updateByPk($id, array('approval_sts' => 'publish'));
 
         OstArticlesStatus::model()->insertlog($id, 'publish');
-
+        
+        OstAuditTrail::model()->insertlog(29, 'Unarchive', $id);
+        
         if ($menu_id == '')
             $this->redirect("index.php?r=ostArticles/admin");
         else

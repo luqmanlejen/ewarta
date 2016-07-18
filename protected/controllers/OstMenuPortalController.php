@@ -42,7 +42,7 @@ class OstMenuPortalController extends CmsController {
                     }
                 }
 
-                OstAuditTrail::model()->insertlog(8, 'create', $model->id);
+                OstAuditTrail::model()->insertlog(18, 'create', $model->id);
 
                 $this->redirect("index.php?r=ostMenuPortal/admin");
             }
@@ -81,7 +81,7 @@ class OstMenuPortalController extends CmsController {
                     }
                 }
 
-                OstAuditTrail::model()->insertlog(8, 'update', $id);
+                OstAuditTrail::model()->insertlog(18, 'update', $id);
 
                 $this->redirect("index.php?r=ostMenuPortal/admin");
             }
@@ -92,7 +92,7 @@ class OstMenuPortalController extends CmsController {
 
     public function actionDelete($id) {
 
-        OstAuditTrail::model()->insertlog(8, 'delete', $id);
+        OstAuditTrail::model()->insertlog(18, 'delete', $id);
 
         OstMenuAccess::model()->deleteAllByAttributes(array('menu_id' => $id));
 
